@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  class="no-js">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Font Awesome CSS Icons (For cool glyphicons) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
     <link rel="stylesheet" href="./assets/styles/style.css">
     <title>Train Station App :: Carlos Molina :: Full Stack Web Developer</title>
   </head>
@@ -37,6 +39,8 @@
                             <table class="table">
                                     <thead>
                                       <tr>
+                                        <th>Delete</th>
+                                        <th>Edit</th>
                                         <th>Train Name</th>
                                         <th>Destination</th>
                                         <th>Frequency (min)</th>
@@ -60,20 +64,24 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="trainName">Train name</label>
-                                        <input type="text" class="form-control" id="trainNameInput" placeholder="Train name">
+                                        <input type="text" class="form-control" id="trainNameInput" placeholder="Give us a name for the train" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="Destination">Destination</label>
-                                        <input type="text" class="form-control" id="trainDestInput" placeholder="Train destination">
+                                        <input type="text" class="form-control" id="trainDestInput" placeholder="Enter a destination" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="First Train">First Train Time</label>
-                                        <input type="text" class="form-control" id="firstTrainInput" placeholder="Train time (Military time)">
+                                        <label for="First Train">First Train Time (HH:MM)</label>
+                                        <input type="time" id="firstTrainInput"
+                                         placeholder="HH:MM Military Time" required/>
+                                         <p id="timeerror" class="text-muted"></p>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="Frequency">Frequency (min)</label>
-                                        <input type="text" class="form-control" id="frequencyInput" placeholder="Frequency">
+                                        <input type="number" max="180" id="frequencyInput"  class="form-control" placeholder="Less than 180 min." onkeydown="return FilterInput(event)" onpaste="handlePaste(event)" required>
+                                        <p id="freqerror" class="text-muted"></p>
                                     </div>
                                     <button type="submit" id="addTrainBtn" class="btn btn-primary btn-info">Add Train</button>
                                 </form>
@@ -87,7 +95,32 @@
     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <!-- Link to Moment.js should go here -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script>
+    //     function FilterInput(event) {
+    //     var keyCode = ('which' in event) ? event.which : event.keyCode;
+    //     isNotWanted = (keyCode == 109 || keyCode == 189 || keyCode == 69 || keyCode == 101 || keyCode == 190);
+    //     return !isNotWanted;
+    //      e.stopPropagation();
+    //      e.preventDefault();
+    //   }
+
+       //Numeric field validation agains COPY/PASTE content
+    function handlePaste(e) {
+        var clipboardData, pastedData;
+        // Get pasted data via clipboard API
+        clipboardData = e.clipboardData || window.clipboardData;
+        pastedData = clipboardData.getData('Text').toUpperCase();
+        if (pastedData.indexOf('E') > -1) {
+            //alert('found an E');
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    }
+    </script>
     <script src="./assets/javascript/main.js"></script>
+    <!-- <script src="./assets/javascript/modernizr-custom.js"></script> -->
 
   </body>
 </html>
