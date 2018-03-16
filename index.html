@@ -98,13 +98,13 @@
      <!-- Link to Moment.js should go here -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script>
-    //     function FilterInput(event) {
-    //     var keyCode = ('which' in event) ? event.which : event.keyCode;
-    //     isNotWanted = (keyCode == 109 || keyCode == 189 || keyCode == 69 || keyCode == 101 || keyCode == 190);
-    //     return !isNotWanted;
-    //      e.stopPropagation();
-    //      e.preventDefault();
-    //   }
+        function FilterInput(event) {
+        var keyCode = ('which' in event) ? event.which : event.keyCode;
+        isNotWanted = (keyCode == 109 || keyCode == 189 || keyCode == 69 || keyCode == 101 || keyCode == 190);
+        return !isNotWanted;
+         e.stopPropagation();
+         e.preventDefault();
+      }
 
        //Numeric field validation agains COPY/PASTE content
     function handlePaste(e) {

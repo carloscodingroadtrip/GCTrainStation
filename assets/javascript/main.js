@@ -24,7 +24,6 @@ $(document).ready(function () {
         destination: null,
         frequecy: 0,
         firstTrain: null,
-        ID: 102030409,
     };
 
     //-------- DATABASE ------------------------------
@@ -68,7 +67,7 @@ $(document).ready(function () {
     $('#trainDestInput').bind('keypress', testInput);
 
     $('#addTrainBtn').on('click', function (e) {
-        // e.preventDefault();
+        e.preventDefault();
         // Capture user inputs and store them into variables
         var trainName = $("#trainNameInput").val().trim();
         var trainDest = $("#trainDestInput").val().trim();
@@ -82,13 +81,9 @@ $(document).ready(function () {
 For the First Train Time, you will need to specify AM or PM as well.
 
 Frequency cannot exceed 180 minutes.            `);
-
         } else {
-            $("#addTrainBtn").removeClass('invalid');
-
             var momentFirstTrain =  moment(firstTrainInput, "HH:mm").subtract(1, "years");
             console.log(momentFirstTrain);
-
             // Current Time
             var currentTime = moment();
             console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
@@ -113,8 +108,6 @@ Frequency cannot exceed 180 minutes.            `);
             myTrainObj.destination = trainDest;
             myTrainObj.frequecy = frequency;
             myTrainObj.firstTrain = firstTrainInput;
-            myTrainObj.ID = randomID;
-            console.log(myTrainObj);
         }
 
         //Push to the database
@@ -133,15 +126,6 @@ Frequency cannot exceed 180 minutes.            `);
             e.preventDefault();
         }
     }
-
-    // (function FilterInput(event) {
-    //     var keyCode = ('which' in event) ? event.which : event.keyCode;
-    //     isNotWanted = (keyCode == 109 || keyCode == 189 || keyCode == 69 || keyCode == 101 || keyCode == 190);
-    //     return !isNotWanted;
-    //     e.stopPropagation();
-    //     e.preventDefault();
-    // })();
-
 
     //remove data from firbase
     $(document).on("click", ".remove", function () {
