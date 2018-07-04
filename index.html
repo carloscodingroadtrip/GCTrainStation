@@ -1,126 +1,104 @@
-<!doctype html>
-<html lang="en"  class="no-js">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- Font Awesome CSS Icons (For cool glyphicons) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <!-- Firebase Reference -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <link rel="stylesheet" href="./assets/styles/style.css">
-    <title>Train Station App :: Carlos Molina :: Full Stack Web Developer</title>
-  </head>
-  <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#">Grand Central Train Station</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                </div>
-              </nav>
-            <div class="container-fluid">
-                <!-- <div class="jumbotron">
-                    <h1></h1>
-                </div> -->
-                <!-- Search Panel -->
-                <div class="row">
-                    <!-- Traing Schedule -->
-                    <div class="col-12 col-md-9">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title"><strong><i class="fa fa-table"></i></strong>   Train Schedule</h3>
-                            </div>
-                            <table class="table">
-                                    <thead>
-                                      <tr>
-                                        <th>Delete</th>
-                                        <th>Edit</th>
-                                        <th>Train Name</th>
-                                        <th>Destination</th>
-                                        <th>Frequency (min)</th>
-                                        <th>Next Arrival</th>
-                                        <th>Minutes Away</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <!-- Insert rows here -->
-                                    </tbody>
-                                  </table>
-                        </div>
-                    </div>
-                    <!-- Add Train From -->
-                    <div class="col-6 col-md-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add Train</h3>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="trainName">Train name</label>
-                                        <input type="text" class="form-control" id="trainNameInput" placeholder="Give us a name for the train" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Destination">Destination</label>
-                                        <input type="text" class="form-control" id="trainDestInput" placeholder="Enter a destination" required>
-                                    </div>
+    <title>Train Scheduler</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
 
-                                    <div class="form-group">
-                                        <label for="First Train">First Train Time (HH:MM)</label>
-                                        <input type="time" id="firstTrainInput"
-                                         placeholder="HH:MM Military Time" required/>
-                                         <p id="timeerror" class="text-muted"></p>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Frequency">Frequency (min)</label>
-                                        <input type="number" max="180" id="frequencyInput"  class="form-control" placeholder="Less than 180 min." onkeydown="return FilterInput(event)" onpaste="handlePaste(event)" required>
-                                        <p id="freqerror" class="text-muted"></p>
-                                    </div>
-                                    <button type="submit" id="addTrainBtn" class="btn btn-primary btn-info">Add Train</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Train Scheduler</h1>
+        </div>
+        <!-- Train schedule table -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-light lead">
+                Current Train Schedule
             </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-     <!-- Link to Moment.js should go here -->
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script>
-        function FilterInput(event) {
-        var keyCode = ('which' in event) ? event.which : event.keyCode;
-        isNotWanted = (keyCode == 109 || keyCode == 189 || keyCode == 69 || keyCode == 101 || keyCode == 190);
-        return !isNotWanted;
-         e.stopPropagation();
-         e.preventDefault();
-      }
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class = "text-center" scope="col-1"><i class="fas fa-trash-alt"></i></th>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Destination</th>
+                        <th class="text-center" scope="col">Frequency(min)</th>
+                        <th class="text-center" scope="col">Next Arrival</th>
+                        <th class="text-center" scope="col">Minutes Away</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- here where all train information goes -->
+                </tbody>
+            </table>
+        </div>
 
-       //Numeric field validation agains COPY/PASTE content
-    function handlePaste(e) {
-        var clipboardData, pastedData;
-        // Get pasted data via clipboard API
-        clipboardData = e.clipboardData || window.clipboardData;
-        pastedData = clipboardData.getData('Text').toUpperCase();
-        if (pastedData.indexOf('E') > -1) {
-            //alert('found an E');
-            e.stopPropagation();
-            e.preventDefault();
-        }
-    }
-    </script>
-    <script src="./assets/javascript/main.js"></script>
-    <!-- <script src="./assets/javascript/modernizr-custom.js"></script> -->
+        <!-- train input form -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-light lead">
+                Add Train
+            </div>
+            <form class="px-3">
+                <div class="form-group">
+                    <label class="mt-3" for="trainName">Train Name</label>
+                    <input id="trainName" type="text" class="form-control" placeholder="Enter train name">
+                </div>
+                <div class="form-group">
+                    <label for="trainDestination">Destination</label>
+                    <input id="trainDestination" type="text" class="form-control" placeholder="Destination: City, State">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="trainTime">First Train Time</label>
+                        <input id="trainTime" type="time" class="form-control" placeholder="Enter initial time">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="trainFrequency">Frequency</label>
+                        <input id="trainFrequency" type="number" class="form-control" placeholder="Enter time frequency (min)">
+                    </div>
+                </div>
+                <button id="submit" class="mb-3 mx-3 btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 
-  </body>
+    <!-- Bootstrap Modal -->
+
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Wrong Time Input</h5>
+
+
+                </div>
+                <div class="modal-body">
+                    <p>Input correct time. Time format must be hh:mm AM or PM.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="modalOK" type="button" class="btn btn-primary">OK</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./js/logic.js"></script>
+</body>
+
 </html>
